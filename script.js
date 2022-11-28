@@ -80,4 +80,5 @@ function clear(){
 
 function clearPassword(){
     document.getElementById("result").value="";
+    alert("Coppied!");
 }
