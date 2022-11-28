@@ -57,7 +57,6 @@ function encode(name, password){
             result += shifted[i];
         }
     }
-    console.log(result);
     document.getElementById("result").value = result;
     }
     else{
@@ -70,10 +69,15 @@ function copy(){
     result.select();
     result.setSelectionRange(0,99999);
     navigator.clipboard.writeText(result.value);
+    clearPassword();
 }
 
 function clear(){
     document.getElementById("name").value = "";
     document.getElementById("password").value = "";
     document.getElementById("result").value = "";
+}
+
+function clearPassword(){
+    document.getElementById("result").value="";
 }
