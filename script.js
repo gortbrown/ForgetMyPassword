@@ -25,7 +25,7 @@ function encode(name, password){
     }
     else{
         for(i = 0; i < name_length; i++){
-            combination += name.chatAt(i);
+            combination += name.charAt(i);
             combination += password.charAt(i);
         }
     }
