@@ -36,6 +36,13 @@ function encode(name, password){
     i = 0;
     while(counter > 0){
         var shifted_char = combination.charAt(i).charCodeAt() + shift_value;
+        console.log(shifted_char);
+        if(shifted_char < 32){
+            shifted_char = 32;
+        }
+        else if(shifted_char > 126){
+            shifted_char = 126;
+        }
         shifted += String.fromCharCode(shifted_char);
         i++;
         shift_value--;
