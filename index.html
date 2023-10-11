@@ -1,29 +1,79 @@
 <!DOCTYPE html>
 <html>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="simple.css"/>
-    <head>
-        <title>ForgetMyPassword</title>
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-    </head>
-    <header>
-        <h2>ForgetMyPassword</h2>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="privacy.html">Privacy</a>
-        </nav>
-    </header>
-    <body style="text-align: center;">
-        <p>ForgetMyPassword is a password manager that forgets your passwords until you ask for them.</p>
-        <input type="text" id="name" placeholder="Enter the site name or url..."/>
-        <input type="password" id="password" placeholder="Enter a password..."/>
-        <button type="button" onclick="encode(document.getElementById('name').value, document.getElementById('password').value)">Get Password</button>
-        <p>Result:</p>
-        <input type="password" id="result" placeholder="Password appears here!" readonly/>
-        <button type="button" onclick="copy()">Copy Password</button>
-    </body>
-    <script>
-        clear();
-    </script>
+<!--<script src="script.js"></script>-->
+<link rel="stylesheet" href="simple.css" />
+
+<head>
+    <title>ForgetMyPassword</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<header>
+    <h2>ForgetMyPassword</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+    </nav>
+</header>
+
+<body style="text-align: center;">
+    <p>ForgetMyPassword is a password manager that forgets your passwords until you ask for them.</p>
+    <input type="text" id="name" placeholder="Enter the site name or url..." />
+    <input type="password" id="password" placeholder="Enter a password..." />
+    <button type="button"
+        onclick="encode(document.getElementById('name').value, document.getElementById('password').value)">Get
+        Password</button>
+    <p>Result:</p>
+    <input type="password" id="result" placeholder="Password appears here!" readonly />
+    <button type="button" onclick="copy()">Copy Password</button>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script>
+    var password = "";
+    function encode(name, pass) {
+        var combination = "";
+        var name_length = name.length;
+        var pass_length = pass.length;
+        if (pass_length < name_length) {
+            for (i = 0; i < pass_length; i++) {
+                combination += name.charAt(i);
+                combination += pass.charAt(i);
+            }
+            for (i; i < name_length; i++) {
+                combination += name.charAt(i);
+            }
+        }
+        else if (pass_length > name_length) {
+            for (i = 0; i < name_length; i++) {
+                combination += name.charAt(i);
+                combination += pass.charAt(i);
+            }
+            for (i; i < pass_length; i++) {
+                combination += pass.charAt(i);
+            }
+        }
+        else {
+            for (i = 0; i < name_length; i++) {
+                combination += name.charAt(i);
+                combination += pass.charAt(i);
+            }
+        }
+        password = CryptoJS.AES.encrypt(combination, pass);
+        document.getElementById("result").value = result;
+    }
+    function copy() {
+        navigator.clipboard.writeText(password).then(() => {
+            alert("Coppied");
+            clearPassword();
+        })
+        .catch(() =>{
+            alert("Could not copy");
+        });
+        clearPassword();
+    }
+    function clearPassword() {
+        document.getElementById("result").value = "";
+    }
+</script>
+
 </html>
